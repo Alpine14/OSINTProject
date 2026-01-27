@@ -1,0 +1,62 @@
+sentiment,intensity,keyword
+anti_authority,mild,authoritarian
+anti_authority,mild,police state
+anti_authority,mild,militarized police
+anti_authority,moderate,tyrants
+anti_authority,moderate,oppressors
+anti_authority,moderate,regime enforcers
+anti_authority,moderate,state violence
+anti_authority,moderate,occupying force
+anti_le,mild,anti cop
+anti_le,mild,anti police
+anti_le,mild,riot cops
+anti_le,mild,feds out
+anti_le,moderate,pigs
+anti_le,moderate,cop scum
+anti_le,moderate,bootlickers
+anti_le,strong,fuck the police
+anti_le,strong,ftp slogan
+anti_le,strong,abolish police
+anti_le,strong,no cops
+historical_comparison,strong,fascists
+historical_comparison,strong,gestapo
+historical_comparison,strong,jackboot
+historical_comparison,strong,jackbooted thugs
+historical_comparison,strong,stormtroopers
+historical_comparison,strong,brownshirts
+violence_advocacy,moderate,police brutality
+violence_advocacy,strong,federal thugs
+pro_authority,mild,back the blue
+pro_authority,mild,thin blue line
+pro_authority,mild,support police
+pro_authority,mild,law and order
+pro_authority,moderate,criminal apologists
+pro_authority,moderate,soft on crime
+pro_authority,strong,thugs
+pro_authority,strong,animals
+alarmist,mild,wake up
+alarmist,mild,open your eyes
+alarmist,moderate,they dont want you to know
+alarmist,moderate,mainstream media lies
+alarmist,strong,false flag
+alarmist,strong,inside job
+alarmist,strong,crisis actor
+conspiratorial,mild,coincidence
+conspiratorial,mild,connect the dots
+conspiratorial,moderate,deep state
+conspiratorial,moderate,shadow government
+conspiratorial,moderate,new world order
+conspiratorial,strong,globalist agenda
+conspiratorial,strong,controlled opposition
+urgent,mild,breaking
+urgent,mild,developing
+urgent,moderate,happening now
+urgent,moderate,unconfirmed reports
+urgent,strong,confirmed
+urgent,strong,verified
+skeptical,mild,allegedly
+skeptical,mild,reportedly
+skeptical,moderate,unverified
+skeptical,moderate,take with grain of salt
+skeptical,strong,debunked
+skeptical,strong,fake news

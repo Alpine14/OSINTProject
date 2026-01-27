@@ -1,0 +1,22 @@
+# OSINT Collector Blocklist
+# One term per line. Lines starting with # are comments.
+# These terms will cause posts to be filtered out.
+#
+# IMPORTANT: Add racial slurs, explicit terms, and other content
+# you want to exclude from your dataset here.
+#
+# This file is intentionally sparse - you should populate it
+# based on your specific filtering needs.
+#
+# Resources for blocklists:
+# - https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words
+# - https://github.com/surge-ai/profanity
+#
+# Example format:
+# slur-word
+# another-bad-term
+# explicit-phrase
+
+# TODO: Add your blocklist terms here
+# For safety, we don't include actual slurs in this template.
+# You should download a comprehensive list or build your own.

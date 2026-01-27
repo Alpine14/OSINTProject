@@ -1,0 +1,575 @@
+domain,subdomain,keyword
+military,aviation,helicopter
+military,aviation,low flying
+military,aviation,military aircraft
+military,aviation,blackhawk
+military,aviation,chinook
+military,aviation,osprey
+military,aviation,fighter jet
+military,aviation,jet noise
+military,aviation,circling aircraft
+military,aviation,surveillance plane
+military,aviation,aircraft overhead
+military,aviation,unusual flight
+military,aviation,airport activity
+military,aviation,runway closed
+military,aviation,airspace restricted
+military,aviation,temporary flight restriction
+military,aviation,tfr active
+military,aviation,flight diversion
+military,aviation,radar activity
+military,aviation,plane hovering
+military,aviation,unmarked aircraft
+military,aviation,night flights
+military,aviation,c-130
+military,aviation,c-17
+military,aviation,kc-135
+military,aviation,awacs
+military,aviation,predator drone
+military,aviation,reaper drone
+military,aviation,military helicopter
+military,ground,military convoy
+military,ground,armored vehicle
+military,ground,troop movement
+military,ground,checkpoint
+military,ground,roadblock
+military,ground,national guard
+military,ground,military vehicles
+military,ground,heavy equipment
+military,ground,troops deployed
+military,ground,vehicles staging
+military,ground,humvee
+military,ground,mrap
+military,ground,stryker
+military,ground,tank spotted
+military,ground,apc
+military,ground,military police
+military,maritime,naval vessel
+military,maritime,warship
+military,maritime,coast guard
+military,maritime,patrol boat
+military,maritime,ships offshore
+military,maritime,harbor closed
+military,maritime,maritime security
+military,maritime,unusual ship
+military,maritime,vessel loitering
+military,maritime,ship diversion
+military,maritime,port shutdown
+military,maritime,port activity
+military,maritime,destroyer
+military,maritime,aircraft carrier
+military,maritime,submarine spotted
+military,maritime,naval exercise
+military,exercise,training exercise
+military,exercise,drill exercise
+military,exercise,joint exercise
+military,exercise,live exercise
+military,exercise,simulation drill
+military,exercise,planned exercise
+military,exercise,tabletop exercise
+military,exercise,snap exercise
+military,exercise,joint drills
+military,operations,military action
+military,operations,kinetic strike
+military,operations,airstrike reported
+military,operations,missile strike
+military,operations,rocket attack
+military,operations,artillery fire
+military,operations,ground offensive
+military,operations,mobilization
+military,operations,partial mobilization
+military,operations,force posture
+military,operations,troop movements
+military,operations,force buildup
+military,operations,rules of engagement
+law_enforcement,federal,federal agents
+law_enforcement,federal,federal law enforcement
+law_enforcement,federal,feds
+law_enforcement,federal,fed agents
+law_enforcement,federal,three letter agency
+law_enforcement,federal,alphabet agency
+law_enforcement,federal,fbi
+law_enforcement,federal,fbi agents
+law_enforcement,federal,fbi raid
+law_enforcement,federal,atf
+law_enforcement,federal,atf agents
+law_enforcement,federal,dea
+law_enforcement,federal,dea agents
+law_enforcement,federal,dhs
+law_enforcement,federal,homeland security
+law_enforcement,federal,hsi agents
+law_enforcement,federal,ice agents
+law_enforcement,federal,customs and border protection
+law_enforcement,federal,cbp agents
+law_enforcement,federal,us marshals
+law_enforcement,federal,marshals service
+law_enforcement,federal,secret service
+law_enforcement,federal,protective detail
+law_enforcement,federal,federal protective service
+law_enforcement,federal,fps officers
+law_enforcement,federal,joint task force
+law_enforcement,federal,task force officers
+law_enforcement,federal,plainclothes agents
+law_enforcement,federal,unmarked federal vehicles
+law_enforcement,federal,federal presence
+law_enforcement,federal,federal building secured
+law_enforcement,federal,courthouse security
+law_enforcement,federal,capitol police
+law_enforcement,federal,protective perimeter federal
+law_enforcement,local,police convoy
+law_enforcement,local,large police presence
+law_enforcement,local,police activity
+law_enforcement,local,swat team
+law_enforcement,local,swat deployment
+law_enforcement,local,tactical team
+law_enforcement,local,k9 unit
+law_enforcement,local,police helicopter
+law_enforcement,local,police staging
+law_enforcement,local,officer involved shooting
+law_enforcement,local,police investigation
+law_enforcement,operations,immigration raid
+law_enforcement,operations,ice raid
+law_enforcement,operations,workplace raid
+law_enforcement,operations,border operation
+law_enforcement,operations,border surge
+law_enforcement,operations,border crisis
+law_enforcement,operations,mass deportation
+law_enforcement,operations,detention center
+law_enforcement,operations,processing facility
+law_enforcement,operations,asylum enforcement
+law_enforcement,operations,border patrol encounter
+law_enforcement,operations,cbp operation
+law_enforcement,operations,immigration enforcement action
+law_enforcement,operations,removal operation
+law_enforcement,operations,migrant caravan
+emergency,response,emergency response
+emergency,response,first responders
+emergency,response,fire department
+emergency,response,ems response
+emergency,response,evacuation
+emergency,response,shelter in place
+emergency,response,hazmat
+emergency,response,bomb squad
+emergency,response,mass casualty
+emergency,response,incident command
+emergency,response,triage
+emergency,response,emergency management
+emergency,response,rescue operations
+emergency,incident,explosion
+emergency,incident,loud bang
+emergency,incident,gunshots
+emergency,incident,blast
+emergency,incident,crash
+emergency,incident,downed aircraft
+emergency,incident,wreckage
+emergency,incident,incident response
+emergency,incident,vehicle collision
+emergency,incident,structure fire
+emergency,incident,building collapse
+emergency,incident,derailment
+emergency,incident,hazardous spill
+emergency,infrastructure,power outage
+emergency,infrastructure,grid failure
+emergency,infrastructure,substation
+emergency,infrastructure,infrastructure damage
+emergency,infrastructure,bridge closed
+emergency,infrastructure,tunnel closed
+emergency,infrastructure,rail disruption
+emergency,infrastructure,communications outage
+emergency,infrastructure,cell service down
+emergency,infrastructure,internet outage
+emergency,infrastructure,water main break
+emergency,infrastructure,gas leak
+emergency,infrastructure,pipeline rupture
+emergency,infrastructure,dam breach
+emergency,infrastructure,levee failure
+civil,protest,protest
+civil,protest,demonstration
+civil,protest,march planned
+civil,protest,rally today
+civil,protest,protest downtown
+civil,protest,counter protest
+civil,protest,permit approved
+civil,protest,permit denied
+civil,protest,large gathering
+civil,protest,city hall protest
+civil,protest,peaceful protest
+civil,protest,organized march
+civil,unrest,riot
+civil,unrest,rioting
+civil,unrest,civil unrest
+civil,unrest,crowds forming
+civil,unrest,crowd control
+civil,unrest,tear gas
+civil,unrest,pepper spray
+civil,unrest,police line
+civil,unrest,riot police
+civil,unrest,curfew announced
+civil,unrest,looting
+civil,unrest,vandalism
+civil,unrest,fires set
+civil,unrest,riot declared
+civil,unrest,riot police deployed
+civil,unrest,curfew imposed
+civil,unrest,crowd dispersal
+civil,unrest,less lethal munitions
+civil,unrest,tear gas deployed
+civil,unrest,rubber bullets
+civil,unrest,bean bag rounds
+civil,unrest,police skirmish
+civil,unrest,street clashes
+civil,unrest,barricades erected
+civil,unrest,government buildings targeted
+civil,unrest,domestic unrest
+civil,unrest,mass protest
+civil,unrest,violent protest
+civil,unrest,guard activation
+civil,unrest,national guard deployed
+civil,unrest,federalized guard
+civil,crime,random attack
+civil,crime,violent incident
+civil,crime,active shooter
+civil,crime,mass shooting
+civil,crime,shooting reported
+civil,crime,stabbing reported
+civil,crime,knife attack
+civil,crime,vehicle ramming
+civil,crime,random assault
+civil,crime,suspect at large
+civil,crime,lockdown initiated
+civil,crime,fatal incident
+civil,crime,multiple casualties
+civil,crime,domestic terrorism
+civil,crime,lone actor attack
+civil,crime,copycat attack
+civil,crime,threatening messages
+civil,crime,bomb threat
+civil,crime,hostage situation
+civil,crime,barricaded suspect
+security,physical,restricted area
+security,physical,secured zone
+security,physical,lockdown
+security,physical,security alert
+security,physical,perimeter established
+security,physical,heightened alert
+security,physical,security perimeter
+security,physical,access restricted
+security,physical,evacuated building
+security,physical,security sweep
+security,cyber,data breach
+security,cyber,ransomware
+security,cyber,ransomware attack
+security,cyber,cyber attack
+security,cyber,ddos attack
+security,cyber,network intrusion
+security,cyber,systems compromised
+security,cyber,hacked
+security,cyber,malware detected
+security,cyber,phishing campaign
+security,cyber,credential theft
+security,cyber,zero day
+security,cyber,critical vulnerability
+security,cyber,patch emergency
+security,cyber,scada attack
+security,cyber,ics compromise
+security,cyber,infrastructure hack
+security,cyber,water system hack
+security,cyber,grid cyber attack
+security,cyber,hospital ransomware
+security,info_control,information blackout
+security,info_control,media blackout
+security,info_control,communications blackout
+security,info_control,internet shutdown
+security,info_control,network shutdown
+security,info_control,signal blocked
+security,info_control,restricted access
+security,info_control,jamming detected
+security,info_control,gps spoofing
+information,censorship,content removal
+information,censorship,post taken down
+information,censorship,account suspended
+information,censorship,account banned
+information,censorship,shadow banned
+information,censorship,deplatformed
+information,censorship,censored
+information,censorship,mass takedown
+information,censorship,moderation sweep
+information,censorship,content moderation abuse
+information,censorship,information suppression
+information,censorship,narrative control
+information,censorship,media suppression
+information,propaganda,state media
+information,propaganda,government narrative
+information,propaganda,official narrative
+information,propaganda,talking points
+information,propaganda,scripted messaging
+information,propaganda,coordinated messaging
+information,propaganda,message discipline
+information,propaganda,manufactured consent
+information,propaganda,spin campaign
+information,propaganda,damage control narrative
+information,propaganda,information campaign
+information,propaganda,influence campaign
+information,psyops,perception management
+information,psyops,psychological operations
+information,psyops,psyops
+information,psyops,psych warfare
+information,psyops,information warfare
+information,psyops,cognitive warfare
+information,psyops,hybrid warfare
+information,psyops,hearts and minds
+information,psyops,demoralization campaign
+information,psyops,fear messaging
+information,psyops,panic messaging
+information,misinformation,disinformation
+information,misinformation,misinformation
+information,misinformation,malinformation
+information,misinformation,false flag narrative
+information,misinformation,fake reports
+information,misinformation,fabricated claims
+information,misinformation,deepfake
+information,misinformation,synthetic media
+information,misinformation,bot amplification
+information,misinformation,bot network
+information,misinformation,sockpuppet accounts
+information,misinformation,inauthentic behavior
+information,misinformation,coordinated inauthentic activity
+information,misinformation,astroturfing
+information,misinformation,information laundering
+information,influence_ops,foreign influence
+information,influence_ops,external influence
+information,influence_ops,hostile influence
+information,influence_ops,election interference
+information,influence_ops,media manipulation
+information,influence_ops,algorithm manipulation
+information,influence_ops,trend manipulation
+information,influence_ops,hashtag flooding
+information,influence_ops,narrative flooding
+information,influence_ops,signal drowning
+information,influence_ops,counter narrative
+information,influence_ops,strategic silence
+political,officials,public official
+political,officials,government official
+political,officials,elected official
+political,officials,appointed official
+political,officials,cabinet member
+political,officials,secretary of state
+political,officials,defense secretary
+political,officials,homeland security secretary
+political,officials,attorney general
+political,officials,governor statement
+political,officials,mayor statement
+political,officials,senator statement
+political,officials,congressional hearing
+political,officials,press conference official
+political,officials,official remarks
+political,officials,policy announcement
+political,announcements,government statement
+political,announcements,press conference
+political,announcements,emergency declaration
+political,announcements,state of emergency
+political,announcements,executive order
+political,announcements,official announcement
+political,announcements,public briefing
+political,announcements,law passed
+political,announcements,court ruling
+political,announcements,public safety announcement
+political,announcements,presidential address
+political,announcements,white house statement
+geopolitical,ukraine,ukraine conflict
+geopolitical,ukraine,ukraine war
+geopolitical,ukraine,kyiv statement
+geopolitical,ukraine,zelensky
+geopolitical,ukraine,ukrainian military
+geopolitical,ukraine,russian offensive
+geopolitical,ukraine,frontline update
+geopolitical,ukraine,missile barrage
+geopolitical,ukraine,drone strike
+geopolitical,ukraine,air defense activation
+geopolitical,ukraine,mobilization ukraine
+geopolitical,ukraine,nato support ukraine
+geopolitical,taiwan,taiwan strait
+geopolitical,taiwan,taiwan tension
+geopolitical,taiwan,taiwan blockade
+geopolitical,taiwan,taiwan invasion
+geopolitical,taiwan,taiwan air defense
+geopolitical,taiwan,taiwan scramble
+geopolitical,taiwan,pla activity
+geopolitical,taiwan,pla navy
+geopolitical,taiwan,pla air force
+geopolitical,taiwan,chinese military drills
+geopolitical,china,chinese activity
+geopolitical,china,ccp statement
+geopolitical,china,beijing statement
+geopolitical,china,foreign ministry china
+geopolitical,china,wolf warrior diplomacy
+geopolitical,china,south china sea
+geopolitical,china,maritime militia
+geopolitical,china,coast guard law
+geopolitical,china,information control china
+geopolitical,china,internet controls china
+geopolitical,venezuela,venezuela crisis
+geopolitical,venezuela,venezuela protests
+geopolitical,venezuela,maduro
+geopolitical,venezuela,nicolas maduro
+geopolitical,venezuela,opposition leader venezuela
+geopolitical,venezuela,venezuela military loyalty
+geopolitical,venezuela,venezuela election unrest
+geopolitical,venezuela,venezuela sanctions
+geopolitical,venezuela,venezuela oil politics
+geopolitical,venezuela,venezuela armed forces
+geopolitical,international,eu resolution
+geopolitical,international,european council statement
+geopolitical,international,european parliament vote
+geopolitical,international,eu sanctions
+geopolitical,international,joint communique eu
+geopolitical,international,un resolution
+geopolitical,international,security council resolution
+geopolitical,international,general assembly vote
+geopolitical,international,un secretary general
+geopolitical,international,special rapporteur
+geopolitical,international,condemnation issued
+geopolitical,international,international concern
+geopolitical,international,diplomatic protest
+geopolitical,international,nato statement
+geopolitical,international,nato article 5
+geopolitical,russia,kremlin statement
+geopolitical,russia,putin
+geopolitical,russia,russian military
+geopolitical,russia,wagner group
+geopolitical,russia,russian mobilization
+geopolitical,russia,russian conscription
+geopolitical,russia,russia sanctions
+geopolitical,russia,russian navy
+geopolitical,middle_east,iran statement
+geopolitical,middle_east,israel strike
+geopolitical,middle_east,gaza
+geopolitical,middle_east,hezbollah
+geopolitical,middle_east,houthi
+geopolitical,middle_east,red sea shipping
+geopolitical,middle_east,strait of hormuz
+geopolitical,middle_east,irgc
+geopolitical,middle_east,iraq militia
+geopolitical,middle_east,syria strike
+natural,weather,tornado warning
+natural,weather,tornado confirmed
+natural,weather,hurricane
+natural,weather,tropical storm
+natural,weather,flash flood
+natural,weather,flood warning
+natural,weather,severe thunderstorm
+natural,weather,blizzard
+natural,weather,ice storm
+natural,weather,extreme heat
+natural,weather,heat advisory
+natural,weather,winter storm
+natural,weather,storm surge
+natural,weather,weather emergency
+natural,disaster,earthquake
+natural,disaster,aftershock
+natural,disaster,tsunami warning
+natural,disaster,wildfire
+natural,disaster,fire evacuation
+natural,disaster,mudslide
+natural,disaster,landslide
+natural,disaster,volcanic activity
+natural,disaster,sinkhole
+natural,disaster,flooding
+natural,disaster,disaster declaration
+natural,disaster,fema activated
+natural,disaster,disaster relief
+natural,health,outbreak
+natural,health,epidemic
+natural,health,pandemic
+natural,health,quarantine
+natural,health,isolation order
+natural,health,hospital surge
+natural,health,icu capacity
+natural,health,public health emergency
+natural,health,cdc advisory
+natural,health,who alert
+natural,health,disease cluster
+natural,health,contamination
+natural,health,food recall
+natural,health,water contamination
+natural,health,boil water advisory
+financial,markets,market crash
+financial,markets,flash crash
+financial,markets,trading halted
+financial,markets,circuit breaker
+financial,markets,market panic
+financial,markets,bank run
+financial,markets,liquidity crisis
+financial,markets,bond selloff
+financial,markets,currency crisis
+financial,markets,stock plunge
+financial,economic,sanctions announced
+financial,economic,sanctions evasion
+financial,economic,asset freeze
+financial,economic,bank failure
+financial,economic,fdic takeover
+financial,economic,bailout
+financial,economic,emergency lending
+financial,economic,fed intervention
+financial,economic,treasury statement
+financial,economic,debt ceiling
+financial,economic,government shutdown
+financial,economic,default risk
+transit,rail,train derailment
+transit,rail,rail accident
+transit,rail,amtrak delay
+transit,rail,freight derailment
+transit,rail,hazmat train
+transit,rail,rail bridge collapse
+transit,rail,track damage
+transit,rail,rail service suspended
+transit,rail,metro shutdown
+transit,rail,subway incident
+transit,road,highway closed
+transit,road,interstate shutdown
+transit,road,major accident
+transit,road,traffic emergency
+transit,road,bridge collapse
+transit,road,road washout
+transit,road,hazmat spill highway
+transit,air,airport shutdown
+transit,air,flights grounded
+transit,air,airspace closed
+transit,air,faa ground stop
+transit,air,airport evacuation
+transit,air,runway incursion
+transit,air,near miss
+nuclear,facility,nuclear plant
+nuclear,facility,reactor scram
+nuclear,facility,nuclear incident
+nuclear,facility,radiation leak
+nuclear,facility,nuclear emergency
+nuclear,facility,nrc alert
+nuclear,facility,cooling failure
+nuclear,weapons,nuclear test
+nuclear,weapons,missile test
+nuclear,weapons,icbm
+nuclear,weapons,nuclear threat
+nuclear,weapons,defcon
+nuclear,weapons,strategic forces
+nuclear,weapons,nuclear posture
+pattern,anomaly,anomalous activity
+pattern,anomaly,unusual activity
+pattern,anomaly,strange behavior
+pattern,anomaly,unexpected activity
+pattern,anomaly,unexplained noise
+pattern,anomaly,unknown cause
+pattern,anomaly,unidentified object
+pattern,anomaly,strange lights
+pattern,anomaly,sudden shutdown
+pattern,anomaly,sudden closure
+pattern,detection,activity spike
+pattern,detection,increased presence
+pattern,detection,heightened security
+pattern,detection,sudden activity
+pattern,detection,unusual traffic
+pattern,detection,unusual movement
+pattern,detection,repeated activity
+pattern,detection,pattern emerging
+pattern,detection,surge in reports
+pattern,detection,clustering
