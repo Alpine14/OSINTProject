@@ -102,22 +102,12 @@ class ContentFilter:
         """
         Return a minimal default blocklist.
 
-        This is a fallback if no blocklist file exists.
-        Focuses on the most egregious terms to catch.
+        This is a fallback when no blocklist file exists. For production use,
+        populate data/blocklist.txt with terms to filter.
 
         Returns:
-            Set of blocked terms
+            Set of blocked terms (empty by default)
         """
-        # TODO: Add your default blocklist terms here
-        # These should be terms that are NEVER acceptable in your output
-        #
-        # Example (you should expand this):
-        # return {
-        #     "n-word-here",  # Obviously use the actual terms
-        #     "other-slurs",
-        #     # ... etc
-        # }
-
         return set()
 
     def _compile_blocklist_pattern(self) -> Optional[re.Pattern]:

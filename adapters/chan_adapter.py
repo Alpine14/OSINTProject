@@ -7,7 +7,6 @@ The API is free, requires no authentication, and is well-documented.
 API Docs: https://github.com/4chan/4chan-API
 
 IMPORTANT: This adapter is configured to ONLY access SFW (blue) boards.
-NSFW boards are explicitly blocked to keep the project demo-safe.
 
 Rate Limits:
     - 1 request per second for the same endpoint
@@ -23,9 +22,6 @@ from html import unescape
 import re
 
 import requests
-
-# TODO: pip install requests
-# import requests
 
 from adapters.base import SourceAdapter
 from models.post import OSINTPost
