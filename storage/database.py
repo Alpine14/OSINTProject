@@ -196,6 +196,37 @@ class Storage:
         )
         return results
 
+    def _row_to_post(self, conn, row) -> OSINTPost:
+        """
+        Reconstruct an OSINTPost from a database row plus its keywords/categories.
+
+        Args:
+            conn: Active database connection
+            row: sqlite3.Row from the posts table
+
+        Returns:
+            OSINTPost instance
+        """
+        cursor = conn.cursor()
+        post_id = row["post_id"]
+
+        cursor.execute("SELECT keyword FROM post_keywords WHERE post_id = ?", (post_id,))
+        keywords = [r[0] for r in cursor.fetchall()]
+
+        cursor.execute("SELECT category FROM post_categories WHERE post_id = ?", (post_id,))
+        categories = [r[0] for r in cursor.fetchall()]
+
+        return OSINTPost(
+            post_id=post_id,
+            date=datetime.fromisoformat(row["date"]),
+            username=row["username"],
+            text=row["text"],
+            source=row["source"],
+            url=row["url"],
+            matched_keywords=keywords,
+            categories=categories
+        )
+
     def get_by_id(self, post_id: str) -> Optional[OSINTPost]:
         """
         Retrieve a post by its ID.
@@ -206,8 +237,13 @@ class Storage:
         Returns:
             OSINTPost or None if not found
         """
-        # TODO: Implement retrieval
-        pass
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM posts WHERE post_id = ?", (post_id,))
+            row = cursor.fetchone()
+            if row is None:
+                return None
+            return self._row_to_post(conn, row)
 
     def query_by_keyword(
         self,
@@ -226,8 +262,25 @@ class Storage:
         Returns:
             List of matching posts
         """
-        # TODO: Implement query
-        pass
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if since:
+                cursor.execute(
+                    "SELECT p.* FROM posts p "
+                    "JOIN post_keywords pk ON p.post_id = pk.post_id "
+                    "WHERE pk.keyword = ? AND p.date > ? "
+                    "ORDER BY p.date DESC LIMIT ?",
+                    (keyword, since.isoformat(), limit)
+                )
+            else:
+                cursor.execute(
+                    "SELECT p.* FROM posts p "
+                    "JOIN post_keywords pk ON p.post_id = pk.post_id "
+                    "WHERE pk.keyword = ? "
+                    "ORDER BY p.date DESC LIMIT ?",
+                    (keyword, limit)
+                )
+            return [self._row_to_post(conn, row) for row in cursor.fetchall()]
 
     def query_by_category(
         self,
@@ -246,8 +299,25 @@ class Storage:
         Returns:
             List of matching posts
         """
-        # TODO: Implement query
-        pass
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if since:
+                cursor.execute(
+                    "SELECT p.* FROM posts p "
+                    "JOIN post_categories pc ON p.post_id = pc.post_id "
+                    "WHERE pc.category = ? AND p.date > ? "
+                    "ORDER BY p.date DESC LIMIT ?",
+                    (category, since.isoformat(), limit)
+                )
+            else:
+                cursor.execute(
+                    "SELECT p.* FROM posts p "
+                    "JOIN post_categories pc ON p.post_id = pc.post_id "
+                    "WHERE pc.category = ? "
+                    "ORDER BY p.date DESC LIMIT ?",
+                    (category, limit)
+                )
+            return [self._row_to_post(conn, row) for row in cursor.fetchall()]
 
     def query_by_source(
         self,
@@ -266,8 +336,21 @@ class Storage:
         Returns:
             List of matching posts
         """
-        # TODO: Implement query
-        pass
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if since:
+                cursor.execute(
+                    "SELECT * FROM posts WHERE source = ? AND date > ? "
+                    "ORDER BY date DESC LIMIT ?",
+                    (source, since.isoformat(), limit)
+                )
+            else:
+                cursor.execute(
+                    "SELECT * FROM posts WHERE source = ? "
+                    "ORDER BY date DESC LIMIT ?",
+                    (source, limit)
+                )
+            return [self._row_to_post(conn, row) for row in cursor.fetchall()]
 
     def get_keyword_counts(
         self,
@@ -284,8 +367,23 @@ class Storage:
         Returns:
             List of (keyword, count) tuples, sorted by count descending
         """
-        # TODO: Implement aggregation
-        pass
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if since:
+                cursor.execute(
+                    "SELECT pk.keyword, COUNT(*) as cnt FROM post_keywords pk "
+                    "JOIN posts p ON pk.post_id = p.post_id "
+                    "WHERE p.date > ? "
+                    "GROUP BY pk.keyword ORDER BY cnt DESC LIMIT ?",
+                    (since.isoformat(), limit)
+                )
+            else:
+                cursor.execute(
+                    "SELECT keyword, COUNT(*) as cnt FROM post_keywords "
+                    "GROUP BY keyword ORDER BY cnt DESC LIMIT ?",
+                    (limit,)
+                )
+            return [(row[0], row[1]) for row in cursor.fetchall()]
 
     def get_category_counts(
         self,
@@ -300,8 +398,22 @@ class Storage:
         Returns:
             Dict mapping category -> count
         """
-        # TODO: Implement aggregation
-        pass
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if since:
+                cursor.execute(
+                    "SELECT pc.category, COUNT(*) as cnt FROM post_categories pc "
+                    "JOIN posts p ON pc.post_id = p.post_id "
+                    "WHERE p.date > ? "
+                    "GROUP BY pc.category ORDER BY cnt DESC",
+                    (since.isoformat(),)
+                )
+            else:
+                cursor.execute(
+                    "SELECT category, COUNT(*) as cnt FROM post_categories "
+                    "GROUP BY category ORDER BY cnt DESC"
+                )
+            return {row[0]: row[1] for row in cursor.fetchall()}
 
     def get_hourly_counts(
         self,
@@ -320,8 +432,67 @@ class Storage:
         Returns:
             List of (hour_timestamp, count) tuples
         """
-        # TODO: Implement time series query
-        pass
+        cutoff = (datetime.utcnow() - timedelta(days=days)).isoformat()
+
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+
+            if keyword:
+                cursor.execute(
+                    "SELECT strftime('%Y-%m-%d %H:00:00', p.date) as hour, COUNT(*) as cnt "
+                    "FROM posts p "
+                    "JOIN post_keywords pk ON p.post_id = pk.post_id "
+                    "WHERE pk.keyword = ? AND p.date > ? "
+                    "GROUP BY hour ORDER BY hour",
+                    (keyword, cutoff)
+                )
+            elif category:
+                cursor.execute(
+                    "SELECT strftime('%Y-%m-%d %H:00:00', p.date) as hour, COUNT(*) as cnt "
+                    "FROM posts p "
+                    "JOIN post_categories pc ON p.post_id = pc.post_id "
+                    "WHERE pc.category = ? AND p.date > ? "
+                    "GROUP BY hour ORDER BY hour",
+                    (category, cutoff)
+                )
+            else:
+                cursor.execute(
+                    "SELECT strftime('%Y-%m-%d %H:00:00', date) as hour, COUNT(*) as cnt "
+                    "FROM posts WHERE date > ? "
+                    "GROUP BY hour ORDER BY hour",
+                    (cutoff,)
+                )
+
+            return [(row[0], row[1]) for row in cursor.fetchall()]
+
+    def get_all_posts(
+        self,
+        limit: int = 10000,
+        since: Optional[datetime] = None
+    ) -> List[OSINTPost]:
+        """
+        Retrieve all posts, optionally filtered by date.
+
+        Args:
+            limit: Maximum number of posts to return
+            since: Only return posts after this date
+
+        Returns:
+            List of OSINTPost objects
+        """
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            if since:
+                cursor.execute(
+                    "SELECT * FROM posts WHERE date > ? ORDER BY date DESC LIMIT ?",
+                    (since.isoformat(), limit)
+                )
+            else:
+                cursor.execute(
+                    "SELECT * FROM posts ORDER BY date DESC LIMIT ?",
+                    (limit,)
+                )
+            return [self._row_to_post(conn, row) for row in cursor.fetchall()]
 
     def cleanup_old_posts(self) -> int:
         """

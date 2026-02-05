@@ -67,32 +67,28 @@ class KeywordMatcher:
             - Reverse index from keyword to category
             - Combined regex pattern for matching
         """
-        # TODO: Implement keyword loading with new format
-        #
-        # raw_data = self.loader.load()  # Returns nested dict
-        #
-        # all_keywords = []
-        #
-        # for domain, subdomains in raw_data.items():
-        #     if domain not in self.keywords:
-        #         self.keywords[domain] = {}
-        #
-        #     for subdomain, keywords in subdomains.items():
-        #         self.keywords[domain][subdomain] = keywords
-        #
-        #         for keyword in keywords:
-        #             self.keyword_to_category[keyword.lower()] = (domain, subdomain)
-        #             all_keywords.append(keyword)
-        #
-        # # Compile combined pattern
-        # self._pattern = self._compile_pattern(all_keywords)
-        #
-        # logger.info(
-        #     f"Loaded {len(all_keywords)} keywords across "
-        #     f"{len(self.keywords)} domains"
-        # )
+        raw_data = self.loader.load()  # Returns nested dict
 
-        pass
+        all_keywords = []
+
+        for domain, subdomains in raw_data.items():
+            if domain not in self.keywords:
+                self.keywords[domain] = {}
+
+            for subdomain, keywords in subdomains.items():
+                self.keywords[domain][subdomain] = keywords
+
+                for keyword in keywords:
+                    self.keyword_to_category[keyword.lower()] = (domain, subdomain)
+                    all_keywords.append(keyword)
+
+        # Compile combined pattern
+        self._pattern = self._compile_pattern(all_keywords)
+
+        logger.info(
+            f"Loaded {len(all_keywords)} keywords across "
+            f"{len(self.keywords)} domains"
+        )
 
     def _compile_pattern(self, keywords: List[str]) -> re.Pattern:
         """
@@ -107,20 +103,16 @@ class KeywordMatcher:
         Returns:
             Compiled regex pattern
         """
-        # TODO: Implement pattern compilation
-        #
-        # # Sort by length (longest first) to ensure longer phrases match first
-        # sorted_keywords = sorted(keywords, key=len, reverse=True)
-        #
-        # # Escape special regex characters
-        # escaped = [re.escape(kw) for kw in sorted_keywords]
-        #
-        # # Join with OR and add word boundaries
-        # pattern = r'\b(' + '|'.join(escaped) + r')\b'
-        #
-        # return re.compile(pattern, re.IGNORECASE)
+        # Sort by length (longest first) to ensure longer phrases match first
+        sorted_keywords = sorted(keywords, key=len, reverse=True)
 
-        pass
+        # Escape special regex characters
+        escaped = [re.escape(kw) for kw in sorted_keywords]
+
+        # Join with OR and add word boundaries
+        pattern = r'\b(' + '|'.join(escaped) + r')\b'
+
+        return re.compile(pattern, re.IGNORECASE)
 
     def match(self, post: OSINTPost) -> MatchResult:
         """
@@ -136,38 +128,34 @@ class KeywordMatcher:
         domains = set()
         subdomains = set()
 
-        # TODO: Implement matching
-        #
-        # if not self._pattern:
-        #     return MatchResult([], set(), set(), 0, 0.0)
-        #
-        # text_lower = post.text.lower()
-        #
-        # # Find all matches
-        # for match in self._pattern.finditer(text_lower):
-        #     keyword = match.group().lower()
-        #     matched_keywords.append(keyword)
-        #
-        #     # Look up category
-        #     if keyword in self.keyword_to_category:
-        #         domain, subdomain = self.keyword_to_category[keyword]
-        #         domains.add(domain)
-        #         subdomains.add(f"{domain}/{subdomain}")
-        #
-        # # Calculate relevance score
-        # # Simple: ratio of matched keywords to total words
-        # word_count = len(text_lower.split())
-        # relevance = min(1.0, len(matched_keywords) / max(1, word_count) * 10)
-        #
-        # return MatchResult(
-        #     matched_keywords=matched_keywords,
-        #     domains=domains,
-        #     subdomains=subdomains,
-        #     match_count=len(matched_keywords),
-        #     relevance_score=relevance
-        # )
+        if not self._pattern:
+            return MatchResult([], set(), set(), 0, 0.0)
 
-        return MatchResult([], set(), set(), 0, 0.0)
+        text_lower = post.text.lower()
+
+        # Find all matches
+        for match in self._pattern.finditer(text_lower):
+            keyword = match.group().lower()
+            matched_keywords.append(keyword)
+
+            # Look up category
+            if keyword in self.keyword_to_category:
+                domain, subdomain = self.keyword_to_category[keyword]
+                domains.add(domain)
+                subdomains.add(f"{domain}/{subdomain}")
+
+        # Calculate relevance score
+        # Simple: ratio of matched keywords to total words
+        word_count = len(text_lower.split())
+        relevance = min(1.0, len(matched_keywords) / max(1, word_count) * 10)
+
+        return MatchResult(
+            matched_keywords=matched_keywords,
+            domains=domains,
+            subdomains=subdomains,
+            match_count=len(matched_keywords),
+            relevance_score=relevance
+        )
 
     def match_and_update(self, post: OSINTPost) -> OSINTPost:
         """

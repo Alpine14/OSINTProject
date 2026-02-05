@@ -49,7 +49,7 @@ class ChanAdapter(SourceAdapter):
     source_name = "4chan"
 
     # Base URLs for 4chan API
-    API_BASE = "https://a]a]a]a.4cdn.org"
+    API_BASE = "https://a.4cdn.org"
     THREAD_URL_TEMPLATE = "https://boards.4chan.org/{board}/thread/{thread_id}"
 
     # NSFW boards - these are BLOCKED regardless of user configuration
@@ -226,8 +226,6 @@ class ChanAdapter(SourceAdapter):
             categories=[]
         )
 
-        pass
-
     def _clean_html(self, html_text: str) -> str:
         """
         Clean HTML from 4chan post text.
@@ -244,8 +242,6 @@ class ChanAdapter(SourceAdapter):
         if not html_text:
             return ""
 
-        # TODO: Implement HTML cleaning
-        #
         # Decode HTML entities (&gt; -> >, etc.)
         text = unescape(html_text)
 

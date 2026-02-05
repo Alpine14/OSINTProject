@@ -18,8 +18,7 @@ from dataclasses import dataclass
 from typing import List, Set, Tuple, Optional
 from pathlib import Path
 
-# TODO: pip install requests (for Perspective API)
-# import requests
+import requests
 
 from models.post import OSINTPost
 from config import filter_config
@@ -134,16 +133,13 @@ class ContentFilter:
         if not self.blocklist:
             return None
 
-        # TODO: Implement regex compilation
-        # # Escape special regex characters in each term
-        # escaped_terms = [re.escape(term) for term in self.blocklist]
-        #
-        # # Join with OR and add word boundaries
-        # pattern = r'\b(' + '|'.join(escaped_terms) + r')\b'
-        #
-        # return re.compile(pattern, re.IGNORECASE)
+        # Escape special regex characters in each term
+        escaped_terms = [re.escape(term) for term in self.blocklist]
 
-        return None
+        # Join with OR and add word boundaries
+        pattern = r'\b(' + '|'.join(escaped_terms) + r')\b'
+
+        return re.compile(pattern, re.IGNORECASE)
 
     def filter(self, post: OSINTPost) -> FilterResult:
         """
@@ -189,13 +185,12 @@ class ContentFilter:
         if not self._blocklist_pattern:
             return FilterResult(passed=True)
 
-        # TODO: Implement blocklist matching
-        # match = self._blocklist_pattern.search(text)
-        # if match:
-        #     return FilterResult(
-        #         passed=False,
-        #         reason=f"blocklist_match:{match.group()}"
-        #     )
+        match = self._blocklist_pattern.search(text)
+        if match:
+            return FilterResult(
+                passed=False,
+                reason=f"blocklist_match:{match.group()}"
+            )
 
         return FilterResult(passed=True)
 
@@ -219,53 +214,49 @@ class ContentFilter:
         Returns:
             FilterResult with toxicity score
         """
-        # TODO: Implement Perspective API call
-        #
-        # url = "https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze"
-        # params = {"key": self.perspective_api_key}
-        #
-        # payload = {
-        #     "comment": {"text": text},
-        #     "languages": ["en"],
-        #     "requestedAttributes": {
-        #         "TOXICITY": {},
-        #         "SEVERE_TOXICITY": {},
-        #         "IDENTITY_ATTACK": {},
-        #     }
-        # }
-        #
-        # try:
-        #     response = requests.post(url, params=params, json=payload)
-        #     response.raise_for_status()
-        #     result = response.json()
-        #
-        #     # Extract scores
-        #     toxicity = result["attributeScores"]["TOXICITY"]["summaryScore"]["value"]
-        #     identity_attack = result["attributeScores"]["IDENTITY_ATTACK"]["summaryScore"]["value"]
-        #
-        #     # Check thresholds
-        #     if toxicity > self.toxicity_threshold:
-        #         return FilterResult(
-        #             passed=False,
-        #             reason=f"toxicity:{toxicity:.2f}",
-        #             toxicity_score=toxicity
-        #         )
-        #
-        #     if identity_attack > filter_config.identity_attack_threshold:
-        #         return FilterResult(
-        #             passed=False,
-        #             reason=f"identity_attack:{identity_attack:.2f}",
-        #             toxicity_score=toxicity
-        #         )
-        #
-        #     return FilterResult(passed=True, toxicity_score=toxicity)
-        #
-        # except Exception as e:
-        #     logger.error(f"Perspective API error: {e}")
-        #     # Fail open - if API fails, let the post through
-        #     return FilterResult(passed=True)
+        url = "https://commentanalyzer.googleapis.com/v1alpha1/comments:analyze"
+        params = {"key": self.perspective_api_key}
 
-        return FilterResult(passed=True)
+        payload = {
+            "comment": {"text": text},
+            "languages": ["en"],
+            "requestedAttributes": {
+                "TOXICITY": {},
+                "SEVERE_TOXICITY": {},
+                "IDENTITY_ATTACK": {},
+            }
+        }
+
+        try:
+            response = requests.post(url, params=params, json=payload)
+            response.raise_for_status()
+            result = response.json()
+
+            # Extract scores
+            toxicity = result["attributeScores"]["TOXICITY"]["summaryScore"]["value"]
+            identity_attack = result["attributeScores"]["IDENTITY_ATTACK"]["summaryScore"]["value"]
+
+            # Check thresholds
+            if toxicity > self.toxicity_threshold:
+                return FilterResult(
+                    passed=False,
+                    reason=f"toxicity:{toxicity:.2f}",
+                    toxicity_score=toxicity
+                )
+
+            if identity_attack > filter_config.identity_attack_threshold:
+                return FilterResult(
+                    passed=False,
+                    reason=f"identity_attack:{identity_attack:.2f}",
+                    toxicity_score=toxicity
+                )
+
+            return FilterResult(passed=True, toxicity_score=toxicity)
+
+        except Exception as e:
+            logger.error(f"Perspective API error: {e}")
+            # Fail open - if API fails, let the post through
+            return FilterResult(passed=True)
 
     def filter_batch(self, posts: List[OSINTPost]) -> Tuple[List[OSINTPost], int]:
         """

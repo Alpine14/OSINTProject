@@ -22,6 +22,7 @@ from processing.content_filter import ContentFilter
 from processing.keyword_matcher import KeywordMatcher
 from storage.database import Storage
 from config import collection_config, REDDIT_SUBREDDITS, CHAN_SFW_BOARDS
+from analysis.post_graph import PostGraph
 
 # Configure logging
 logging.basicConfig(
@@ -50,7 +51,7 @@ class OSINTCollector:
         reddit_credentials: Optional[Dict[str, str]] = None,
         enable_reddit: bool = True,
         enable_4chan: bool = True,
-        keywords_path: str = "Keywords.csv",
+        keywords_path: str = "data/Keywords.csv",
         db_path: str = "osint_data.db"
     ):
         """
@@ -86,10 +87,11 @@ class OSINTCollector:
             except Exception as e:
                 logger.error(f"Failed to initialize 4chan adapter: {e}")
 
-        # Initialize filter, matcher, and storage
+        # Initialize filter, matcher, storage, and graph
         self.filter = ContentFilter()
         self.matcher = KeywordMatcher(keywords_path)
         self.storage = Storage(db_path)
+        self.graph = PostGraph(min_shared_keywords=2)
 
         logger.info(f"Collector initialized with {len(self.adapters)} adapters")
 
@@ -152,6 +154,15 @@ class OSINTCollector:
         store_results = self.storage.store_batch(posts_to_store)
         stats["stored"] = store_results["stored"]
         stats["duplicates"] = store_results["duplicates"]
+
+        # Update graph with newly stored posts
+        if posts_to_store:
+            graph_stats = self.graph.add_posts(posts_to_store)
+            logger.info(
+                f"Graph updated: {graph_stats['nodes_added']} nodes, "
+                f"{graph_stats['edges_created']} edges "
+                f"(total: {self.graph.node_count} nodes, {self.graph.edge_count} edges)"
+            )
 
         # Log summary
         logger.info(
@@ -254,6 +265,17 @@ def main():
         action="store_true",
         help="Show database statistics and exit"
     )
+    parser.add_argument(
+        "--graph",
+        action="store_true",
+        help="Build graph from all stored posts and print cluster summary"
+    )
+    parser.add_argument(
+        "--graph-min-keywords",
+        type=int,
+        default=2,
+        help="Minimum shared keywords for a graph edge (default: 2)"
+    )
 
     args = parser.parse_args()
 
@@ -280,6 +302,37 @@ def main():
         print(f"Keywords matched: {stats['database']['unique_keywords_matched']}")
         if stats['database']['date_range']['min']:
             print(f"Date range: {stats['database']['date_range']['min']} to {stats['database']['date_range']['max']}")
+        return
+
+    if args.graph:
+        collector.graph = PostGraph(min_shared_keywords=args.graph_min_keywords)
+        graph = PostGraph.from_storage(collector.storage, min_shared=args.graph_min_keywords)
+        graph_stats = graph.get_stats()
+        print("\n=== Post Graph ===")
+        print(f"Nodes (posts): {graph_stats['node_count']}")
+        print(f"Edges: {graph_stats['edge_count']}")
+        print(f"Components: {graph_stats['component_count']}")
+        print(f"Largest component: {graph_stats['largest_component_size']} posts")
+        print(f"Average degree: {graph_stats['avg_degree']}")
+
+        clusters = graph.get_clusters(min_size=2)
+        if clusters:
+            print(f"\n=== Clusters (>= 2 posts) : {len(clusters)} ===")
+            for i, cluster in enumerate(clusters[:10], 1):
+                cluster_ids = [p.post_id for p in cluster]
+                kw_counts = graph.get_cluster_keywords(cluster_ids)
+                top_kws = sorted(kw_counts.items(), key=lambda x: x[1], reverse=True)[:5]
+                kw_str = ", ".join(f"{kw}({c})" for kw, c in top_kws)
+                print(f"  Cluster {i}: {len(cluster)} posts -- {kw_str}")
+        else:
+            print("\nNo clusters found (no posts share enough keywords).")
+
+        most_connected = graph.get_most_connected(limit=5)
+        if most_connected:
+            print("\n=== Most Connected Posts ===")
+            for post, degree in most_connected:
+                preview = post.text[:60].replace("\n", " ")
+                print(f"  [{degree} edges] {post.post_id}: {preview}...")
         return
 
     if args.once:

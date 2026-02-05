@@ -17,8 +17,8 @@ import logging
 from datetime import datetime
 from typing import List, Optional
 
-# TODO: pip install praw
-# import praw
+import praw
+
 
 from adapters.base import SourceAdapter
 from models.post import OSINTPost
@@ -58,12 +58,11 @@ class RedditAdapter(SourceAdapter):
         self.subreddits = subreddits or REDDIT_SUBREDDITS
         self.reddit = None  # Will hold PRAW instance
 
-        # TODO: Initialize PRAW client
-        # self.reddit = praw.Reddit(
-        #     client_id=client_id,
-        #     client_secret=client_secret,
-        #     user_agent=user_agent
-        # )
+        self.reddit = praw.Reddit(
+            client_id=client_id,
+            client_secret=client_secret,
+            user_agent=user_agent
+        )
 
     def fetch(self, limit_per_subreddit: int = 25) -> List[OSINTPost]:
         """
@@ -101,13 +100,12 @@ class RedditAdapter(SourceAdapter):
         """
         posts = []
 
-        # TODO: Implement PRAW fetching logic
-        # subreddit = self.reddit.subreddit(subreddit_name)
-        #
-        # # Fetch from "new" to get most recent posts
-        # for submission in subreddit.new(limit=limit):
-        #     post = self._convert_submission(submission, subreddit_name)
-        #     posts.append(post)
+        subreddit = self.reddit.subreddit(subreddit_name)
+
+        # Fetch from "new" to get most recent posts
+        for submission in subreddit.new(limit=limit):
+            post = self._convert_submission(submission, subreddit_name)
+            posts.append(post)
 
         return posts
 
@@ -122,25 +120,22 @@ class RedditAdapter(SourceAdapter):
         Returns:
             OSINTPost object
         """
-        # TODO: Implement conversion
-        #
-        # Combine title and selftext for full content
-        # text = submission.title
-        # if submission.selftext:
-        #     text += "\n\n" + submission.selftext
-        #
-        # return OSINTPost(
-        #     post_id=f"reddit_{submission.id}",
-        #     date=datetime.utcfromtimestamp(submission.created_utc),
-        #     username=str(submission.author) if submission.author else "[deleted]",
-        #     text=text,
-        #     source=f"reddit/r/{subreddit_name}",
-        #     url=f"https://reddit.com{submission.permalink}",
-        #     matched_keywords=[],  # Filled in later by KeywordMatcher
-        #     categories=[]         # Filled in later by KeywordMatcher
-        # )
 
-        pass
+        # Combine title and selftext for full content
+        text = submission.title
+        if submission.selftext:
+            text += "\n\n" + submission.selftext
+
+        return OSINTPost(
+            post_id=f"reddit_{submission.id}",
+            date=datetime.utcfromtimestamp(submission.created_utc),
+            username=str(submission.author) if submission.author else "[deleted]",
+            text=text,
+            source=f"reddit/r/{subreddit_name}",
+            url=f"https://reddit.com{submission.permalink}",
+            matched_keywords=[],
+            categories=[]
+        )
 
     def fetch_comments(self, post_id: str, limit: int = 50) -> List[OSINTPost]:
         """
@@ -157,14 +152,13 @@ class RedditAdapter(SourceAdapter):
         """
         comments = []
 
-        # TODO: Implement comment fetching
-        # submission = self.reddit.submission(id=post_id)
-        # submission.comments.replace_more(limit=0)  # Don't fetch "more comments"
-        #
-        # for comment in submission.comments.list()[:limit]:
-        #     if comment.body == "[deleted]":
-        #         continue
-        #     comments.append(self._convert_comment(comment, post_id))
+        submission = self.reddit.submission(id=post_id)
+        submission.comments.replace_more(limit=0)  # Don't fetch "more comments"
+
+        for comment in submission.comments.list()[:limit]:
+            if comment.body == "[deleted]":
+                continue
+            comments.append(self._convert_comment(comment, post_id))
 
         return comments
 
@@ -179,8 +173,16 @@ class RedditAdapter(SourceAdapter):
         Returns:
             OSINTPost object
         """
-        # TODO: Implement conversion
-        pass
+        return OSINTPost(
+            post_id=f"reddit_{comment.id}",
+            date=datetime.utcfromtimestamp(comment.created_utc),
+            username=str(comment.author) if comment.author else "[deleted]",
+            text=comment.body,
+            source=f"reddit/comment/{parent_post_id}",
+            url=f"https://reddit.com{comment.permalink}",
+            matched_keywords=[],
+            categories=[]
+        )
 
 
 # =============================================================================
