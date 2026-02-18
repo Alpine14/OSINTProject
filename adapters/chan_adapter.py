@@ -263,7 +263,7 @@ class ChanAdapter(SourceAdapter):
 if __name__ == "__main__":
     # Example usage
     try:
-        adapter = ChanAdapter(boards=["news", "n"])
+        adapter = ChanAdapter(boards=["news", "n", "k"])
         posts = adapter.fetch(limit_per_board=20)
         print(f"Fetched {len(posts)} total posts")
 

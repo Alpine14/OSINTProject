@@ -116,6 +116,27 @@ class Storage:
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_keywords_keyword ON post_keywords(keyword)")
             cursor.execute("CREATE INDEX IF NOT EXISTS idx_categories_category ON post_categories(category)")
 
+            # View for easy browsing with all data in one place
+            cursor.execute("DROP VIEW IF EXISTS posts_full")
+            cursor.execute("""
+                CREATE VIEW posts_full AS
+                SELECT
+                    p.id,
+                    p.post_id,
+                    p.date,
+                    p.username,
+                    p.text,
+                    p.source,
+                    p.url,
+                    GROUP_CONCAT(DISTINCT pk.keyword) AS matched_keywords,
+                    GROUP_CONCAT(DISTINCT pc.category) AS categories,
+                    p.created_at
+                FROM posts p
+                LEFT JOIN post_keywords pk ON p.post_id = pk.post_id
+                LEFT JOIN post_categories pc ON p.post_id = pc.post_id
+                GROUP BY p.id
+            """)
+
             logger.info(f"Database initialized: {self.db_path}")
 
     def store(self, post: OSINTPost) -> bool:
